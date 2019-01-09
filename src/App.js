@@ -84,6 +84,14 @@ class App extends Component {
       });
   }
 
+  getGuncelKur() {
+    let gk;
+    if (typeof this.state.guncelKur !== "undefined")
+      gk = +this.state.guncelKur.replace(",", ".");
+    else gk = NaN;
+    return gk;
+  }
+
   getData(type) {
     return {
       yollanan: this.state.yollanan,
@@ -92,7 +100,7 @@ class App extends Component {
       paribuKomisyon: this.state.paribuKomisyon,
       paribuFiyat: this.state["paribu" + type + "Bid"],
       coinbaseFiyat: this.state["coinbase" + type + "Ask"],
-      guncelKur: this.state.guncelKur
+      guncelKur: this.getGuncelKur()
     };
   }
 
@@ -104,7 +112,7 @@ class App extends Component {
       paribuKomisyon: this.state.paribuKomisyon,
       paribuFiyat: this.state["paribu" + type + "Ask"],
       coinbaseFiyat: this.state["coinbase" + type + "Bid"],
-      guncelKur: this.state.guncelKur
+      guncelKur: this.getGuncelKur()
     };
   }
 
