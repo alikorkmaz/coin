@@ -209,32 +209,6 @@ class App extends Component {
             </div>
           </div>
           <br />
-          {/* <div className="row">
-            <div className="col-xs-6">
-              {
-                <Main
-                  attributes={this.getData("Xrp")}
-                  title="XRP"
-                  ratio="0.01"
-                  passive
-                  type="Xrp"
-                  onIncrease={this.increase}
-                />
-              }
-            </div>
-            <div className="col-xs-6">
-              {
-                <ReverseMain
-                  attributes={this.getDataReverse("Xrp")}
-                  title="Reverse XRP"
-                  ratio="0.002"
-                  passive
-                  onIncrease={this.increaseReverse}
-                  type="Xrp"
-                />
-              }
-            </div>
-          </div> */}
         </div>
         <br />
         <br />
