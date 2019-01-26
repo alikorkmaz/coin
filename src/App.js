@@ -12,9 +12,42 @@ class App extends Component {
     this.increaseReverse = this.increaseReverse.bind(this);
   }
 
-  state = {};
+  state = {
+    yollanan: 25000,
+    wireBedeli: 100,
+    transferBedeli: 10,
+    coinbaseKomisyon: 0,
+    paribuKomisyon: 0.15
+  };
 
   fetchApi() {
+    fetch("https://cors-anywhere.herokuapp.com/https://koineks.com/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          paribuBchBid: jsonData.BCH.bid,
+          paribuBchAsk: jsonData.BCH.ask,
+          paribuEtcBid: jsonData.ETC.bid,
+          paribuEtcAsk: jsonData.ETC.ask
+        });
+        fetch("https://api.pro.coinbase.com/products/BCH-USD/ticker")
+          .then(res => res.json())
+          .then(jsonData => {
+            this.setState({
+              coinbaseBchBid: jsonData.bid,
+              coinbaseBchAsk: jsonData.ask
+            });
+          });
+        fetch("https://api.pro.coinbase.com/products/ETC-USD/ticker")
+          .then(res => res.json())
+          .then(jsonData => {
+            this.setState({
+              coinbaseEtcBid: jsonData.bid,
+              coinbaseEtcAsk: jsonData.ask
+            });
+          });
+      });
+
     fetch("https://cors-anywhere.herokuapp.com/https://www.paribu.com/ticker")
       .then(res => res.json())
       .then(jsonData => {
@@ -26,12 +59,7 @@ class App extends Component {
           paribuLtcBid: jsonData.LTC_TL.highestBid,
           paribuLtcAsk: jsonData.LTC_TL.lowestAsk,
           paribuXrpBid: jsonData.XRP_TL.highestBid,
-          paribuXrpAsk: jsonData.XRP_TL.lowestAsk,
-          yollanan: 25000,
-          wireBedeli: 100,
-          transferBedeli: 10,
-          coinbaseKomisyon: 0,
-          paribuKomisyon: 0.15
+          paribuXrpAsk: jsonData.XRP_TL.lowestAsk
         });
         fetch("https://api.pro.coinbase.com/products/BTC-USD/ticker")
           .then(res => res.json())
@@ -147,7 +175,7 @@ class App extends Component {
               {
                 <Main
                   attributes={this.getData("Btc")}
-                  ratio="50"
+                  ratio="10"
                   title="BTC"
                   type="Btc"
                   onIncrease={this.increase}
@@ -158,7 +186,7 @@ class App extends Component {
               {
                 <ReverseMain
                   attributes={this.getDataReverse("Btc")}
-                  ratio="10"
+                  ratio="2"
                   title="Reverse BTC"
                   type="Btc"
                   onIncrease={this.increaseReverse}
@@ -172,7 +200,7 @@ class App extends Component {
               {
                 <Main
                   attributes={this.getData("Eth")}
-                  ratio="5"
+                  ratio="1"
                   title="ETH"
                   type="Eth"
                   onIncrease={this.increase}
@@ -183,7 +211,7 @@ class App extends Component {
               {
                 <ReverseMain
                   attributes={this.getDataReverse("Eth")}
-                  ratio="1"
+                  ratio="0.2"
                   title="Reverse ETH"
                   onIncrease={this.increaseReverse}
                   type="Eth"
@@ -197,7 +225,7 @@ class App extends Component {
               {
                 <Main
                   attributes={this.getData("Ltc")}
-                  ratio="1"
+                  ratio="0.2"
                   title="LTC"
                   type="Ltc"
                   onIncrease={this.increase}
@@ -208,10 +236,60 @@ class App extends Component {
               {
                 <ReverseMain
                   attributes={this.getDataReverse("Ltc")}
-                  ratio="0.2"
+                  ratio="0.04"
                   title="Reverse LTC"
                   onIncrease={this.increaseReverse}
                   type="Ltc"
+                />
+              }
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("Bch")}
+                  ratio="1"
+                  title="BCH - Koineks"
+                  type="Bch"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("Bch")}
+                  ratio="0.2"
+                  title="Reverse BCH - Koineks"
+                  onIncrease={this.increaseReverse}
+                  type="Bch"
+                />
+              }
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("Etc")}
+                  ratio="0.02"
+                  title="ETC - Koineks"
+                  type="Etc"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("Etc")}
+                  ratio="0.004"
+                  title="Reverse ETC - Koineks"
+                  onIncrease={this.increaseReverse}
+                  type="Etc"
                 />
               }
             </div>
