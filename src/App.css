@@ -44,3 +44,12 @@
 .custom-btn {
   width: 100%;
 }
+
+.novis {
+  visibility: hidden;
+  height: 0;
+}
+
+.vis {
+  visibility: visible;
+}

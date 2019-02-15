@@ -48,6 +48,22 @@ class App extends Component {
           });
       });
 
+    fetch(
+      "https://cors-anywhere.herokuapp.com/https://www.btcturk.com/api/ticker"
+    )
+      .then(res => res.json())
+      .then(jsonData => {
+        console.log(jsonData);
+        this.setState({
+          paribuxBtcBid: jsonData.filter(x => x.pair === "BTCTRY")[0].bid,
+          paribuxBtcAsk: jsonData.filter(x => x.pair === "BTCTRY")[0].ask,
+          paribuxEthBid: jsonData.filter(x => x.pair === "ETHTRY")[0].bid,
+          paribuxEthAsk: jsonData.filter(x => x.pair === "ETHTRY")[0].ask,
+          paribuxLtcBid: jsonData.filter(x => x.pair === "LTCTRY")[0].bid,
+          paribuxLtcAsk: jsonData.filter(x => x.pair === "LTCTRY")[0].ask
+        });
+      });
+
     fetch("https://cors-anywhere.herokuapp.com/https://www.paribu.com/ticker")
       .then(res => res.json())
       .then(jsonData => {
@@ -66,7 +82,9 @@ class App extends Component {
           .then(jsonData => {
             this.setState({
               coinbaseBtcBid: jsonData.bid,
-              coinbaseBtcAsk: jsonData.ask
+              coinbaseBtcAsk: jsonData.ask,
+              coinbasexBtcBid: jsonData.bid,
+              coinbasexBtcAsk: jsonData.ask
             });
           });
         fetch("https://api.pro.coinbase.com/products/ETH-USD/ticker")
@@ -74,7 +92,9 @@ class App extends Component {
           .then(jsonData => {
             this.setState({
               coinbaseEthBid: jsonData.bid,
-              coinbaseEthAsk: jsonData.ask
+              coinbaseEthAsk: jsonData.ask,
+              coinbasexEthBid: jsonData.bid,
+              coinbasexEthAsk: jsonData.ask
             });
           });
         fetch("https://api.pro.coinbase.com/products/LTC-USD/ticker")
@@ -82,33 +102,35 @@ class App extends Component {
           .then(jsonData => {
             this.setState({
               coinbaseLtcBid: jsonData.bid,
-              coinbaseLtcAsk: jsonData.ask
+              coinbaseLtcAsk: jsonData.ask,
+              coinbasexLtcBid: jsonData.bid,
+              coinbasexLtcAsk: jsonData.ask
             });
           });
-        let headers = new Headers({
-          "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
-        });
-        fetch("https://cors-anywhere.herokuapp.com/https://www.doviz.com", {
-          method: "GET",
-          headers: headers
-        }).then(res => {
-          res
-            .text()
-            .then(result => Parser(result))
-            .then(
-              result =>
-                result.props.children[1].props.children[10].props.children[1]
-                  .props.children[1].props.children[1].props.children[3].props
-                  .children[3].props.children[1].props.children[3].props
-                  .children
-            )
-            .then(result => {
-              this.setState({
-                guncelKur: result
-              });
-            });
-        });
+        // let headers = new Headers({
+        //   "User-Agent":
+        //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+        // });
+        // fetch("https://cors-anywhere.herokuapp.com/https://www.doviz.com", {
+        //   method: "GET",
+        //   headers: headers
+        // }).then(res => {
+        //   console.log(res);
+        //   // .text()
+        //   // .then(result => Parser(result))
+        //   // .then(
+        //   //   result =>
+        //   //     result.props.children[1].props.children[10].props.children[1]
+        //   //       .props.children[1].props.children[1].props.children[3].props
+        //   //       .children[3].props.children[1].props.children[3].props
+        //   //       .children
+        //   // )
+        //   // .then(result => {
+        //   //   this.setState({
+        //   //     guncelKur: result
+        //   //   });
+        //   // });
+        // });
       });
   }
 
@@ -164,11 +186,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <div className="row">
+          {/* <div className="row">
             <div className="col-xs-12">
               <b>Kur: {this.state.guncelKur}</b>
             </div>
-          </div>
+          </div>*/}
           <br />
           <div className="row">
             <div className="col-xs-6">
@@ -189,6 +211,31 @@ class App extends Component {
                   ratio="2"
                   title="Reverse BTC"
                   type="Btc"
+                  onIncrease={this.increaseReverse}
+                />
+              }
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xBtc")}
+                  ratio="10"
+                  title="BTC - BTCTURK"
+                  type="xBtc"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xBtc")}
+                  ratio="2"
+                  title="Reverse BTC - BTCTURK"
+                  type="xBtc"
                   onIncrease={this.increaseReverse}
                 />
               }
@@ -224,6 +271,31 @@ class App extends Component {
             <div className="col-xs-6">
               {
                 <Main
+                  attributes={this.getData("xEth")}
+                  ratio="1"
+                  title="ETH - BTCTURK"
+                  type="xEth"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xEth")}
+                  ratio="0.2"
+                  title="Reverse ETH - BTCTURK"
+                  onIncrease={this.increaseReverse}
+                  type="xEth"
+                />
+              }
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
                   attributes={this.getData("Ltc")}
                   ratio="0.2"
                   title="LTC"
@@ -240,6 +312,31 @@ class App extends Component {
                   title="Reverse LTC"
                   onIncrease={this.increaseReverse}
                   type="Ltc"
+                />
+              }
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xLtc")}
+                  ratio="0.2"
+                  title="LTC - BTCTURK"
+                  type="xLtc"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xLtc")}
+                  ratio="0.04"
+                  title="Reverse LTC - BTCTURK"
+                  onIncrease={this.increaseReverse}
+                  type="xLtc"
                 />
               }
             </div>
