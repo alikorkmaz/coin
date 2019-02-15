@@ -209,7 +209,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("Btc")}
                   ratio="2"
-                  title="Reverse BTC"
+                  title="rBTC"
                   type="Btc"
                   onIncrease={this.increaseReverse}
                 />
@@ -234,7 +234,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("xBtc")}
                   ratio="2"
-                  title="Reverse BTC - BTCTURK"
+                  title="rBTC - BTCTURK"
                   type="xBtc"
                   onIncrease={this.increaseReverse}
                 />
@@ -259,7 +259,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("Eth")}
                   ratio="0.2"
-                  title="Reverse ETH"
+                  title="rETH"
                   onIncrease={this.increaseReverse}
                   type="Eth"
                 />
@@ -284,7 +284,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("xEth")}
                   ratio="0.2"
-                  title="Reverse ETH - BTCTURK"
+                  title="rETH - BTCTURK"
                   onIncrease={this.increaseReverse}
                   type="xEth"
                 />
@@ -309,7 +309,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("Ltc")}
                   ratio="0.04"
-                  title="Reverse LTC"
+                  title="rLTC"
                   onIncrease={this.increaseReverse}
                   type="Ltc"
                 />
@@ -334,7 +334,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("xLtc")}
                   ratio="0.04"
-                  title="Reverse LTC - BTCTURK"
+                  title="rLTC - BTCTURK"
                   onIncrease={this.increaseReverse}
                   type="xLtc"
                 />
@@ -359,7 +359,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("Bch")}
                   ratio="0.2"
-                  title="Reverse BCH - Koineks"
+                  title="rBCH - Koineks"
                   onIncrease={this.increaseReverse}
                   type="Bch"
                 />
@@ -384,7 +384,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("Etc")}
                   ratio="0.004"
-                  title="Reverse ETC - Koineks"
+                  title="rETC - Koineks"
                   onIncrease={this.increaseReverse}
                   type="Etc"
                 />
