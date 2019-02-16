@@ -6,7 +6,7 @@ class ReverseMain extends Component {
   };
 
   handleClick = () => {
-    this.setState({ vis: !this.state.vis });
+    this.setState({ vis: true });
   };
 
   render() {
