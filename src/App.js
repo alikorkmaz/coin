@@ -10,6 +10,7 @@ class App extends Component {
     this.fetchApi();
     this.increase = this.increase.bind(this);
     this.increaseReverse = this.increaseReverse.bind(this);
+    // this.parseKur = this.parseKur.bind(this);
   }
 
   state = {
@@ -25,27 +26,15 @@ class App extends Component {
       .then(res => res.json())
       .then(jsonData => {
         this.setState({
-          paribuBchBid: jsonData.BCH.bid,
-          paribuBchAsk: jsonData.BCH.ask,
-          paribuEtcBid: jsonData.ETC.bid,
-          paribuEtcAsk: jsonData.ETC.ask
+          paribuxxBtcBid: jsonData.BTC.bid,
+          paribuxxBtcAsk: jsonData.BTC.ask,
+          paribuxxEthBid: jsonData.ETH.bid,
+          paribuxxEthAsk: jsonData.ETH.ask,
+          paribuxxLtcBid: jsonData.LTC.bid,
+          paribuxxLtcAsk: jsonData.LTC.ask,
+          paribuxxXrpBid: jsonData.XRP.bid,
+          paribuxxXrpAsk: jsonData.XRP.ask
         });
-        fetch("https://api.pro.coinbase.com/products/BCH-USD/ticker")
-          .then(res => res.json())
-          .then(jsonData => {
-            this.setState({
-              coinbaseBchBid: jsonData.bid,
-              coinbaseBchAsk: jsonData.ask
-            });
-          });
-        fetch("https://api.pro.coinbase.com/products/ETC-USD/ticker")
-          .then(res => res.json())
-          .then(jsonData => {
-            this.setState({
-              coinbaseEtcBid: jsonData.bid,
-              coinbaseEtcAsk: jsonData.ask
-            });
-          });
       });
 
     fetch(
@@ -53,14 +42,15 @@ class App extends Component {
     )
       .then(res => res.json())
       .then(jsonData => {
-        console.log(jsonData);
         this.setState({
           paribuxBtcBid: jsonData.filter(x => x.pair === "BTCTRY")[0].bid,
           paribuxBtcAsk: jsonData.filter(x => x.pair === "BTCTRY")[0].ask,
           paribuxEthBid: jsonData.filter(x => x.pair === "ETHTRY")[0].bid,
           paribuxEthAsk: jsonData.filter(x => x.pair === "ETHTRY")[0].ask,
           paribuxLtcBid: jsonData.filter(x => x.pair === "LTCTRY")[0].bid,
-          paribuxLtcAsk: jsonData.filter(x => x.pair === "LTCTRY")[0].ask
+          paribuxLtcAsk: jsonData.filter(x => x.pair === "LTCTRY")[0].ask,
+          paribuxXrpBid: jsonData.filter(x => x.pair === "XRPTRY")[0].bid,
+          paribuxXrpAsk: jsonData.filter(x => x.pair === "XRPTRY")[0].ask
         });
       });
 
@@ -77,36 +67,6 @@ class App extends Component {
           paribuXrpBid: jsonData.XRP_TL.highestBid,
           paribuXrpAsk: jsonData.XRP_TL.lowestAsk
         });
-        fetch("https://api.pro.coinbase.com/products/BTC-USD/ticker")
-          .then(res => res.json())
-          .then(jsonData => {
-            this.setState({
-              coinbaseBtcBid: jsonData.bid,
-              coinbaseBtcAsk: jsonData.ask,
-              coinbasexBtcBid: jsonData.bid,
-              coinbasexBtcAsk: jsonData.ask
-            });
-          });
-        fetch("https://api.pro.coinbase.com/products/ETH-USD/ticker")
-          .then(res => res.json())
-          .then(jsonData => {
-            this.setState({
-              coinbaseEthBid: jsonData.bid,
-              coinbaseEthAsk: jsonData.ask,
-              coinbasexEthBid: jsonData.bid,
-              coinbasexEthAsk: jsonData.ask
-            });
-          });
-        fetch("https://api.pro.coinbase.com/products/LTC-USD/ticker")
-          .then(res => res.json())
-          .then(jsonData => {
-            this.setState({
-              coinbaseLtcBid: jsonData.bid,
-              coinbaseLtcAsk: jsonData.ask,
-              coinbasexLtcBid: jsonData.bid,
-              coinbasexLtcAsk: jsonData.ask
-            });
-          });
         // let headers = new Headers({
         //   "User-Agent":
         //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
@@ -114,23 +74,60 @@ class App extends Component {
         // fetch("https://cors-anywhere.herokuapp.com/https://www.doviz.com", {
         //   method: "GET",
         //   headers: headers
-        // }).then(res => {
-        //   console.log(res);
-        //   // .text()
-        //   // .then(result => Parser(result))
-        //   // .then(
-        //   //   result =>
-        //   //     result.props.children[1].props.children[10].props.children[1]
-        //   //       .props.children[1].props.children[1].props.children[3].props
-        //   //       .children[3].props.children[1].props.children[3].props
-        //   //       .children
-        //   // )
-        //   // .then(result => {
-        //   //   this.setState({
-        //   //     guncelKur: result
-        //   //   });
-        //   // });
-        // });
+        // })
+        //   .then(res => res.text())
+        //   .then(result => Parser(result))
+        //   .then(result => result.props.children[1].props.children)
+        //   .then(result => result.map(item => this.parseKur(item)));
+      });
+
+    fetch("https://api.pro.coinbase.com/products/BTC-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseBtcBid: jsonData.bid,
+          coinbaseBtcAsk: jsonData.ask,
+          coinbasexBtcBid: jsonData.bid,
+          coinbasexBtcAsk: jsonData.ask,
+          coinbasexxBtcBid: jsonData.bid,
+          coinbasexxBtcAsk: jsonData.ask
+        });
+      });
+    fetch("https://api.pro.coinbase.com/products/ETH-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseEthBid: jsonData.bid,
+          coinbaseEthAsk: jsonData.ask,
+          coinbasexEthBid: jsonData.bid,
+          coinbasexEthAsk: jsonData.ask,
+          coinbasexxEthBid: jsonData.bid,
+          coinbasexxEthAsk: jsonData.ask
+        });
+      });
+    fetch("https://api.pro.coinbase.com/products/LTC-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseLtcBid: jsonData.bid,
+          coinbaseLtcAsk: jsonData.ask,
+          coinbasexLtcBid: jsonData.bid,
+          coinbasexLtcAsk: jsonData.ask,
+          coinbasexxLtcBid: jsonData.bid,
+          coinbasexxLtcAsk: jsonData.ask
+        });
+      });
+    fetch("https://api.pro.coinbase.com/products/XRP-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseXrpBid: jsonData.bid,
+          coinbaseXrpAsk: jsonData.ask,
+          coinbasexXrpBid: jsonData.bid,
+          coinbasexXrpAsk: jsonData.ask,
+          coinbasexxXrpBid: jsonData.bid,
+          coinbasexxXrpAsk: jsonData.ask
+        });
       });
   }
 
@@ -140,6 +137,28 @@ class App extends Component {
       gk = +this.state.guncelKur.replace(",", ".");
     else gk = NaN;
     return gk;
+  }
+
+  parseKur(html) {
+    // if (this.state.guncelKur !== null && this.state.guncelKur !== undefined) {
+    //   console.log(this.state.guncelKur);
+    //   return;
+    // } else if (
+    //   html &&
+    //   html.href === "//m.doviz.com/kur/serbest-piyasa/amerikan-dolari"
+    // ) {
+    //   console.log(html);
+    //   this.setState({
+    //     guncelKur: "5.38"
+    //   });
+    //   return;
+    // } else if (
+    //   html.hasOwnProperty("props") &&
+    //   html.props.hasOwnProperty("children")
+    // ) {
+    //   console.log(html);
+    //   this.parseKur(html.props.children);
+    // }
   }
 
   getData(type) {
@@ -190,7 +209,7 @@ class App extends Component {
             <div className="col-xs-12">
               <b>Kur: {this.state.guncelKur}</b>
             </div>
-          </div>*/}
+          </div> */}
           <br />
           <div className="row">
             <div className="col-xs-6">
@@ -216,7 +235,7 @@ class App extends Component {
               }
             </div>
           </div>
-          <br />
+
           <div className="row">
             <div className="col-xs-6">
               {
@@ -241,7 +260,32 @@ class App extends Component {
               }
             </div>
           </div>
-          <br />
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xxBtc")}
+                  ratio="10"
+                  title="BTC - KOINEKS"
+                  type="xxBtc"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xxBtc")}
+                  ratio="2"
+                  title="rBTC - KOINEKS"
+                  type="xxBtc"
+                  onIncrease={this.increaseReverse}
+                />
+              }
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-xs-6">
               {
@@ -266,7 +310,7 @@ class App extends Component {
               }
             </div>
           </div>
-          <br />
+
           <div className="row">
             <div className="col-xs-6">
               {
@@ -291,7 +335,107 @@ class App extends Component {
               }
             </div>
           </div>
-          <br />
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xxEth")}
+                  ratio="1"
+                  title="ETH - KOINEKS"
+                  type="xxEth"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xxEth")}
+                  ratio="0.2"
+                  title="rETH - KOINEKS"
+                  onIncrease={this.increaseReverse}
+                  type="xxEth"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("Xrp")}
+                  ratio="0.01"
+                  title="XRP"
+                  type="Xrp"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("Xrp")}
+                  ratio="0.002"
+                  title="rXRP"
+                  onIncrease={this.increaseReverse}
+                  type="Xrp"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xXrp")}
+                  ratio="0.01"
+                  title="XRP - BTCTURK"
+                  type="xXrp"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xXrp")}
+                  ratio="0.002"
+                  title="rXRP - BTCTURK"
+                  onIncrease={this.increaseReverse}
+                  type="xXrp"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xxXrp")}
+                  ratio="0.01"
+                  title="XRP - KOINEKS"
+                  type="xxXrp"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xxXrp")}
+                  ratio="0.002"
+                  title="rXRP - KOINEKS"
+                  onIncrease={this.increaseReverse}
+                  type="xxXrp"
+                />
+              }
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-xs-6">
               {
@@ -316,7 +460,7 @@ class App extends Component {
               }
             </div>
           </div>
-          <br />
+
           <div className="row">
             <div className="col-xs-6">
               {
@@ -341,40 +485,15 @@ class App extends Component {
               }
             </div>
           </div>
-          <br />
+
           <div className="row">
             <div className="col-xs-6">
               {
                 <Main
-                  attributes={this.getData("Bch")}
-                  ratio="1"
-                  title="BCH - Koineks"
-                  type="Bch"
-                  onIncrease={this.increase}
-                />
-              }
-            </div>
-            <div className="col-xs-6">
-              {
-                <ReverseMain
-                  attributes={this.getDataReverse("Bch")}
+                  attributes={this.getData("xxLtc")}
                   ratio="0.2"
-                  title="rBCH - Koineks"
-                  onIncrease={this.increaseReverse}
-                  type="Bch"
-                />
-              }
-            </div>
-          </div>
-          <br />
-          <div className="row">
-            <div className="col-xs-6">
-              {
-                <Main
-                  attributes={this.getData("Etc")}
-                  ratio="0.02"
-                  title="ETC - Koineks"
-                  type="Etc"
+                  title="LTC - KOINEKS"
+                  type="xxLtc"
                   onIncrease={this.increase}
                 />
               }
@@ -382,19 +501,17 @@ class App extends Component {
             <div className="col-xs-6">
               {
                 <ReverseMain
-                  attributes={this.getDataReverse("Etc")}
-                  ratio="0.004"
-                  title="rETC - Koineks"
+                  attributes={this.getDataReverse("xxLtc")}
+                  ratio="0.04"
+                  title="rLTC - KOINEKS"
                   onIncrease={this.increaseReverse}
-                  type="Etc"
+                  type="xxLtc"
                 />
               }
             </div>
           </div>
           <br />
         </div>
-        <br />
-        <br />
       </div>
     );
   }
