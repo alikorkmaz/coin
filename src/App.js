@@ -22,7 +22,7 @@ class App extends Component {
   };
 
   fetchApi() {
-    fetch("https://cors-anywhere.herokuapp.com/https://koineks.com/ticker")
+    fetch("https://coin-serv.herokuapp.com/koineks")
       .then(res => res.json())
       .then(jsonData => {
         this.setState({
@@ -37,9 +37,7 @@ class App extends Component {
         });
       });
 
-    fetch(
-      "https://cors-anywhere.herokuapp.com/https://www.btcturk.com/api/ticker"
-    )
+    fetch("https://coin-serv.herokuapp.com/btcturk")
       .then(res => res.json())
       .then(jsonData => {
         this.setState({
@@ -54,7 +52,7 @@ class App extends Component {
         });
       });
 
-    fetch("https://cors-anywhere.herokuapp.com/https://www.paribu.com/ticker")
+    fetch("https://coin-serv.herokuapp.com/paribu")
       .then(res => res.json())
       .then(jsonData => {
         this.setState({
