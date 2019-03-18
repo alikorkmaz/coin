@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Main from "./components/main";
 import ReverseMain from "./components/reverseMain";
 import "./App.css";
-import Parser from "html-react-parser";
 
 class App extends Component {
   constructor(props) {
@@ -10,7 +9,6 @@ class App extends Component {
     this.fetchApi();
     this.increase = this.increase.bind(this);
     this.increaseReverse = this.increaseReverse.bind(this);
-    // this.parseKur = this.parseKur.bind(this);
   }
 
   state = {
@@ -33,7 +31,9 @@ class App extends Component {
           paribuxxLtcBid: jsonData.LTC.bid,
           paribuxxLtcAsk: jsonData.LTC.ask,
           paribuxxXrpBid: jsonData.XRP.bid,
-          paribuxxXrpAsk: jsonData.XRP.ask
+          paribuxxXrpAsk: jsonData.XRP.ask,
+          paribuxxXlmBid: jsonData.XLM.bid,
+          paribuxxXlmAsk: jsonData.XLM.ask
         });
       });
 
@@ -48,7 +48,9 @@ class App extends Component {
           paribuxLtcBid: jsonData.filter(x => x.pair === "LTCTRY")[0].bid,
           paribuxLtcAsk: jsonData.filter(x => x.pair === "LTCTRY")[0].ask,
           paribuxXrpBid: jsonData.filter(x => x.pair === "XRPTRY")[0].bid,
-          paribuxXrpAsk: jsonData.filter(x => x.pair === "XRPTRY")[0].ask
+          paribuxXrpAsk: jsonData.filter(x => x.pair === "XRPTRY")[0].ask,
+          paribuxXlmBid: jsonData.filter(x => x.pair === "XLMTRY")[0].bid,
+          paribuxXlmAsk: jsonData.filter(x => x.pair === "XLMTRY")[0].ask
         });
       });
 
@@ -63,20 +65,16 @@ class App extends Component {
           paribuLtcBid: jsonData.LTC_TL.highestBid,
           paribuLtcAsk: jsonData.LTC_TL.lowestAsk,
           paribuXrpBid: jsonData.XRP_TL.highestBid,
-          paribuXrpAsk: jsonData.XRP_TL.lowestAsk
+          paribuXrpAsk: jsonData.XRP_TL.lowestAsk,
+          paribuXlmBid: jsonData.XLM_TL.highestBid,
+          paribuXlmAsk: jsonData.XLM_TL.lowestAsk
         });
-        // let headers = new Headers({
-        //   "User-Agent":
-        //     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
-        // });
-        // fetch("https://cors-anywhere.herokuapp.com/https://www.doviz.com", {
-        //   method: "GET",
-        //   headers: headers
-        // })
-        //   .then(res => res.text())
-        //   .then(result => Parser(result))
-        //   .then(result => result.props.children[1].props.children)
-        //   .then(result => result.map(item => this.parseKur(item)));
+      });
+
+    fetch("https://coin-serv.herokuapp.com/kur")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({ kur: jsonData.kur });
       });
 
     fetch("https://api.pro.coinbase.com/products/BTC-USD/ticker")
@@ -127,36 +125,18 @@ class App extends Component {
           coinbasexxXrpAsk: jsonData.ask
         });
       });
-  }
-
-  getGuncelKur() {
-    let gk;
-    if (typeof this.state.guncelKur !== "undefined")
-      gk = +this.state.guncelKur.replace(",", ".");
-    else gk = NaN;
-    return gk;
-  }
-
-  parseKur(html) {
-    // if (this.state.guncelKur !== null && this.state.guncelKur !== undefined) {
-    //   console.log(this.state.guncelKur);
-    //   return;
-    // } else if (
-    //   html &&
-    //   html.href === "//m.doviz.com/kur/serbest-piyasa/amerikan-dolari"
-    // ) {
-    //   console.log(html);
-    //   this.setState({
-    //     guncelKur: "5.38"
-    //   });
-    //   return;
-    // } else if (
-    //   html.hasOwnProperty("props") &&
-    //   html.props.hasOwnProperty("children")
-    // ) {
-    //   console.log(html);
-    //   this.parseKur(html.props.children);
-    // }
+    fetch("https://api.pro.coinbase.com/products/XLM-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseXlmBid: jsonData.bid,
+          coinbaseXlmAsk: jsonData.ask,
+          coinbasexXlmBid: jsonData.bid,
+          coinbasexXlmAsk: jsonData.ask,
+          coinbasexxXlmBid: jsonData.bid,
+          coinbasexxXlmAsk: jsonData.ask
+        });
+      });
   }
 
   getData(type) {
@@ -167,7 +147,7 @@ class App extends Component {
       paribuKomisyon: this.state.paribuKomisyon,
       paribuFiyat: this.state["paribu" + type + "Bid"],
       coinbaseFiyat: this.state["coinbase" + type + "Ask"],
-      guncelKur: this.getGuncelKur()
+      guncelKur: this.state.kur
     };
   }
 
@@ -179,7 +159,7 @@ class App extends Component {
       paribuKomisyon: this.state.paribuKomisyon,
       paribuFiyat: this.state["paribu" + type + "Ask"],
       coinbaseFiyat: this.state["coinbase" + type + "Bid"],
-      guncelKur: this.getGuncelKur()
+      guncelKur: this.state.kur
     };
   }
 
@@ -203,11 +183,11 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          {/* <div className="row">
+          <div className="row">
             <div className="col-xs-12">
-              <b>Kur: {this.state.guncelKur}</b>
+              <b>Kur: {this.state.kur}</b>
             </div>
-          </div> */}
+          </div>
           <br />
           <div className="row">
             <div className="col-xs-6">
@@ -504,6 +484,81 @@ class App extends Component {
                   title="rLTC - KOINEKS"
                   onIncrease={this.increaseReverse}
                   type="xxLtc"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("Xlm")}
+                  ratio="0.002"
+                  title="XLM"
+                  type="Xlm"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("Xlm")}
+                  ratio="0.0004"
+                  title="rXLM"
+                  onIncrease={this.increaseReverse}
+                  type="Xlm"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xXlm")}
+                  ratio="0.002"
+                  title="XLM - BTCTURK"
+                  type="xXlm"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xXlm")}
+                  ratio="0.0004"
+                  title="rXLM - BTCTURK"
+                  onIncrease={this.increaseReverse}
+                  type="xXlm"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xxXlm")}
+                  ratio="0.002"
+                  title="XLM - KOINEKS"
+                  type="xxXlm"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xxXlm")}
+                  ratio="0.0004"
+                  title="rXLM - KOINEKS"
+                  onIncrease={this.increaseReverse}
+                  type="xxXlm"
                 />
               }
             </div>
