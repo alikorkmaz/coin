@@ -33,7 +33,9 @@ class App extends Component {
           paribuxxXrpBid: jsonData.XRP.bid,
           paribuxxXrpAsk: jsonData.XRP.ask,
           paribuxxXlmBid: jsonData.XLM.bid,
-          paribuxxXlmAsk: jsonData.XLM.ask
+          paribuxxXlmAsk: jsonData.XLM.ask,
+          paribuxxBchBid: jsonData.BCH.bid,
+          paribuxxBchAsk: jsonData.BCH.ask
         });
       });
 
@@ -67,7 +69,9 @@ class App extends Component {
           paribuXrpBid: jsonData.XRP_TL.highestBid,
           paribuXrpAsk: jsonData.XRP_TL.lowestAsk,
           paribuXlmBid: jsonData.XLM_TL.highestBid,
-          paribuXlmAsk: jsonData.XLM_TL.lowestAsk
+          paribuXlmAsk: jsonData.XLM_TL.lowestAsk,
+          paribuBchBid: jsonData.BCH_TL.highestBid,
+          paribuBchAsk: jsonData.BCH_TL.lowestAsk
         });
       });
 
@@ -87,6 +91,18 @@ class App extends Component {
           coinbasexBtcAsk: jsonData.ask,
           coinbasexxBtcBid: jsonData.bid,
           coinbasexxBtcAsk: jsonData.ask
+        });
+      });
+    fetch("https://api.pro.coinbase.com/products/BCH-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseBchBid: jsonData.bid,
+          coinbaseBchAsk: jsonData.ask,
+          coinbasexBchBid: jsonData.bid,
+          coinbasexBchAsk: jsonData.ask,
+          coinbasexxBchBid: jsonData.bid,
+          coinbasexxBchAsk: jsonData.ask
         });
       });
     fetch("https://api.pro.coinbase.com/products/ETH-USD/ticker")
@@ -559,6 +575,56 @@ class App extends Component {
                   title="rXLM - KOINEKS"
                   onIncrease={this.increaseReverse}
                   type="xxXlm"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("Bch")}
+                  ratio="5"
+                  title="BCH"
+                  type="Bch"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("Bch")}
+                  ratio="1"
+                  title="rBCH"
+                  onIncrease={this.increaseReverse}
+                  type="Bch"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xxBch")}
+                  ratio="5"
+                  title="BCH - KOINEKS"
+                  type="xxBch"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xxBch")}
+                  ratio="1"
+                  title="rBCH - KOINEKS"
+                  onIncrease={this.increaseReverse}
+                  type="xxBch"
                 />
               }
             </div>
