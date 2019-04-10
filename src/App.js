@@ -15,7 +15,7 @@ class App extends Component {
     yollanan: 25000,
     wireBedeli: 100,
     transferBedeli: 10,
-    coinbaseKomisyon: 0,
+    coinbaseKomisyon: 0.1,
     paribuKomisyon: 0.15
   };
 
@@ -35,7 +35,12 @@ class App extends Component {
           paribuxxXlmBid: jsonData.XLM.bid,
           paribuxxXlmAsk: jsonData.XLM.ask,
           paribuxxBchBid: jsonData.BCH.bid,
-          paribuxxBchAsk: jsonData.BCH.ask
+          paribuxxBchAsk: jsonData.BCH.ask,
+
+          paribuxxEosBid: jsonData.EOS.bid,
+          paribuxxEosAsk: jsonData.EOS.ask,
+          paribuxxEtcBid: jsonData.ETC.bid,
+          paribuxxEtcAsk: jsonData.ETC.ask
         });
       });
 
@@ -71,7 +76,9 @@ class App extends Component {
           paribuXlmBid: jsonData.XLM_TL.highestBid,
           paribuXlmAsk: jsonData.XLM_TL.lowestAsk,
           paribuBchBid: jsonData.BCH_TL.highestBid,
-          paribuBchAsk: jsonData.BCH_TL.lowestAsk
+          paribuBchAsk: jsonData.BCH_TL.lowestAsk,
+          paribuEosBid: jsonData.EOS_TL.highestBid,
+          paribuEosAsk: jsonData.EOS_TL.lowestAsk
         });
       });
 
@@ -151,6 +158,30 @@ class App extends Component {
           coinbasexXlmAsk: jsonData.ask,
           coinbasexxXlmBid: jsonData.bid,
           coinbasexxXlmAsk: jsonData.ask
+        });
+      });
+    fetch("https://api.pro.coinbase.com/products/EOS-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseEosBid: jsonData.bid,
+          coinbaseEosAsk: jsonData.ask,
+          coinbasexEosBid: jsonData.bid,
+          coinbasexEosAsk: jsonData.ask,
+          coinbasexxEosBid: jsonData.bid,
+          coinbasexxEosAsk: jsonData.ask
+        });
+      });
+    fetch("https://api.pro.coinbase.com/products/ETC-USD/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseEtcBid: jsonData.bid,
+          coinbaseEtcAsk: jsonData.ask,
+          coinbasexEtcBid: jsonData.bid,
+          coinbasexEtcAsk: jsonData.ask,
+          coinbasexxEtcBid: jsonData.bid,
+          coinbasexxEtcAsk: jsonData.ask
         });
       });
   }
@@ -629,6 +660,82 @@ class App extends Component {
               }
             </div>
           </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("Eos")}
+                  ratio="0.2"
+                  title="EOS"
+                  type="Eos"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("Eos")}
+                  ratio="0.04"
+                  title="rEOS"
+                  onIncrease={this.increaseReverse}
+                  type="Eos"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xxEos")}
+                  ratio="0.2"
+                  title="EOS - KOINEKS"
+                  type="xxEos"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xxEos")}
+                  ratio="0.04"
+                  title="rEOS - KOINEKS"
+                  onIncrease={this.increaseReverse}
+                  type="xxEos"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("xxEtc")}
+                  ratio="0.2"
+                  title="ETC - KOINEKS"
+                  type="xxEtc"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("xxEtc")}
+                  ratio="0.04"
+                  title="rETC - KOINEKS"
+                  onIncrease={this.increaseReverse}
+                  type="xxEtc"
+                />
+              }
+            </div>
+          </div>
+
           <br />
         </div>
       </div>
