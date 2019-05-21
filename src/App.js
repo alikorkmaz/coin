@@ -763,7 +763,7 @@ class App extends Component {
                 <ReverseMain
                   attributes={this.getDataReverse("Bat")}
                   ratio="0.02"
-                  title="rBAT - KOINEKS"
+                  title="rBAT - PARIBU"
                   onIncrease={this.increaseReverse}
                   type="Bat"
                 />
