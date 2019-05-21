@@ -4,19 +4,19 @@ self.__precacheManifest = [
     "url": "/coin/static/js/runtime~main.39c7def4.js"
   },
   {
-    "revision": "607e0bc5d21471e7db9d",
-    "url": "/coin/static/js/main.607e0bc5.chunk.js"
+    "revision": "a90de7f7aa182b0d8aef",
+    "url": "/coin/static/js/main.a90de7f7.chunk.js"
   },
   {
     "revision": "ec7c3b054db072497e7b",
     "url": "/coin/static/js/1.ec7c3b05.chunk.js"
   },
   {
-    "revision": "607e0bc5d21471e7db9d",
+    "revision": "a90de7f7aa182b0d8aef",
     "url": "/coin/static/css/main.5ba03e21.chunk.css"
   },
   {
-    "revision": "f5ad4b9331e25f4ed910504f44b45fe4",
+    "revision": "18328b7cdb3a5190b7560b10d88f488f",
     "url": "/coin/index.html"
   }
 ];
