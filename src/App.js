@@ -78,7 +78,9 @@ class App extends Component {
           paribuBchBid: jsonData.BCH_TL.highestBid,
           paribuBchAsk: jsonData.BCH_TL.lowestAsk,
           paribuEosBid: jsonData.EOS_TL.highestBid,
-          paribuEosAsk: jsonData.EOS_TL.lowestAsk
+          paribuEosAsk: jsonData.EOS_TL.lowestAsk,
+          paribuBatBid: jsonData.BAT_TL.highestBid,
+          paribuBatAsk: jsonData.BAT_TL.lowestAsk
         });
       });
 
@@ -182,6 +184,14 @@ class App extends Component {
           coinbasexEtcAsk: jsonData.ask,
           coinbasexxEtcBid: jsonData.bid,
           coinbasexxEtcAsk: jsonData.ask
+        });
+      });
+    fetch("https://api.pro.coinbase.com/products/BAT-USDC/ticker")
+      .then(res => res.json())
+      .then(jsonData => {
+        this.setState({
+          coinbaseBatBid: jsonData.bid,
+          coinbaseBatAsk: jsonData.ask
         });
       });
   }
@@ -731,6 +741,31 @@ class App extends Component {
                   title="rETC - KOINEKS"
                   onIncrease={this.increaseReverse}
                   type="xxEtc"
+                />
+              }
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-xs-6">
+              {
+                <Main
+                  attributes={this.getData("Bat")}
+                  ratio="0.1"
+                  title="BAT - PARIBU"
+                  type="Bat"
+                  onIncrease={this.increase}
+                />
+              }
+            </div>
+            <div className="col-xs-6">
+              {
+                <ReverseMain
+                  attributes={this.getDataReverse("Bat")}
+                  ratio="0.02"
+                  title="rBAT - KOINEKS"
+                  onIncrease={this.increaseReverse}
+                  type="Bat"
                 />
               }
             </div>
