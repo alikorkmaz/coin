@@ -751,7 +751,7 @@ class App extends Component {
               {
                 <Main
                   attributes={this.getData("Bat")}
-                  ratio="0.1"
+                  ratio="0.01"
                   title="BAT - PARIBU"
                   type="Bat"
                   onIncrease={this.increase}
@@ -762,7 +762,7 @@ class App extends Component {
               {
                 <ReverseMain
                   attributes={this.getDataReverse("Bat")}
-                  ratio="0.02"
+                  ratio="0.002"
                   title="rBAT - PARIBU"
                   onIncrease={this.increaseReverse}
                   type="Bat"
